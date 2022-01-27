@@ -1,14 +1,16 @@
 import '../../../../shared/domain/entities/entitiy.dart';
+import '../../../../shared/domain/value_objects/email.dart';
+import '../../../../shared/domain/value_objects/password.dart';
 
 class SigninAuth extends Entity {
-  final String user;
-  final String pass;
+  final Email email;
+  final Password pass;
 
   const SigninAuth({
-    required this.user,
+    required this.email,
     required this.pass,
   });
 
   @override
-  List<Object?> get props => [user, pass];
+  List<Object?> get props => [email, pass];
 }
