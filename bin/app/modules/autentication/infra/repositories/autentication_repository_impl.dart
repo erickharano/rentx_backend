@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 
+import '../../../../shared/infra/datasource/token_datasource.dart';
 import '../../../../shared/infra/helpers/erros/datasource_failure.dart';
 import '../../domain/entities/signup_auth.dart';
 import '../../domain/entities/signin_auth.dart';
@@ -9,8 +10,12 @@ import '../datasources/user_datasource.dart';
 
 class AutenticationRepositoryImpl implements AutenticationRepository {
   final UserDatasource _datasource;
+  final TokenDatasource _tokenDatasource;
 
-  const AutenticationRepositoryImpl(this._datasource);
+  const AutenticationRepositoryImpl(
+    this._datasource,
+    this._tokenDatasource,
+  );
 
   @override
   Future<Either<Failure, String>> signin({
@@ -18,7 +23,9 @@ class AutenticationRepositoryImpl implements AutenticationRepository {
   }) async {
     try {
       final response = await _datasource.findOne(signinAuth: signinAuth);
-      return Right(response.id.value.$oid);
+      final token = _tokenDatasource.generate(id: response.id.value.$oid);
+
+      return Right(token);
     } on Failure catch (error) {
       return Left(error);
     } catch (error, stackTrace) {

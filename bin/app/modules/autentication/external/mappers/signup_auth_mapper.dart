@@ -5,7 +5,7 @@ class SignupAuthMapper {
   Map<String, dynamic> from(SignupAuth entity) {
     try {
       return {
-        'nome': entity.name,
+        'name': entity.name,
         'email': entity.email.value,
         'pass': entity.pass.hash,
       };

@@ -1,5 +1,4 @@
 import '../../../../shared/domain/value_objects/id.dart';
-import '../../domain/entities/signup_auth.dart';
 import '../../domain/entities/user.dart';
 import '../helpers/errors/user_mapper_failure.dart';
 

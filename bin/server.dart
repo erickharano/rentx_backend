@@ -10,7 +10,7 @@ import 'app/shared/external/database/mongo.dart';
 void main(List<String> args) async {
   // Use any available host or container IP (usually `0.0.0.0`).
   final ip = InternetAddress.anyIPv4;
-  final port = int.parse(Platform.environment['PORT'] ?? '8080');
+  final port = int.parse(Platform.environment['PORT'] ?? '8096');
 
   final database = MongoHelper();
   await database.connect();

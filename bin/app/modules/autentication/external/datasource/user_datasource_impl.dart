@@ -20,13 +20,7 @@ class UserDatasourceImpl implements UserDatasource {
   Future<User?> exists({required Email email}) async {
     try {
       final response = await _database.getCollection("user").findOne(where.eq("email", email.value));
-
-      if (response == null) {
-        throw DatasourceFailure(
-          message: "Usuário não encontrado.",
-          stackTrace: StackTrace.current,
-        );
-      }
+      if (response == null) return null;
 
       return UserMapper().to(response);
     } on Failure {
@@ -43,7 +37,14 @@ class UserDatasourceImpl implements UserDatasource {
   Future<User> findOne({required SigninAuth signinAuth}) async {
     try {
       final user = await exists(email: signinAuth.email);
-      if (user == null || user.pass != signinAuth.pass.hash) {
+      if (user == null) {
+        throw DatasourceFailure(
+          message: "Usuário não encontrado.",
+          stackTrace: StackTrace.current,
+        );
+      }
+
+      if (user.pass != signinAuth.pass.hash) {
         throw DatasourceFailure(
           message: "E-mail ou senha inválido.",
           stackTrace: StackTrace.current,

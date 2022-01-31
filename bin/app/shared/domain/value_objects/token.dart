@@ -12,4 +12,6 @@ class Token extends ValueObject<String> {
 
   @override
   String get message => "Token inválido.";
+
+  String get toFormat => value.split(" ")[1];
 }

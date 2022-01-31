@@ -17,10 +17,10 @@ class Password extends ValueObject<String> {
 
   @override
   bool get isValid {
-    const pattern = r'^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$';
+    // Minimum eight characters, at least one letter and one number
+    const pattern = r'^(?=.[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$';
     final regex = RegExp(pattern);
-    return true;
-    //regex.hasMatch(value);
+    return regex.hasMatch(value);
   }
 
   @override
