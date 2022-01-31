@@ -5,10 +5,10 @@ import '../../domain/entities/signup_auth.dart';
 import '../../domain/entities/signin_auth.dart';
 import '../../../../shared/domain/helpers/errors/failure.dart';
 import '../../domain/repositories/autentication_repository.dart';
-import '../datasources/autentication_datasource.dart';
+import '../datasources/user_datasource.dart';
 
 class AutenticationRepositoryImpl implements AutenticationRepository {
-  final AutenticationDatasource _datasource;
+  final UserDatasource _datasource;
 
   const AutenticationRepositoryImpl(this._datasource);
 
@@ -17,8 +17,8 @@ class AutenticationRepositoryImpl implements AutenticationRepository {
     required SigninAuth signinAuth,
   }) async {
     try {
-      final response = await _datasource.signin(signinAuth: signinAuth);
-      return Right(response);
+      final response = await _datasource.findOne(signinAuth: signinAuth);
+      return Right(response.id.value.$oid);
     } on Failure catch (error) {
       return Left(error);
     } catch (error, stackTrace) {
@@ -34,7 +34,7 @@ class AutenticationRepositoryImpl implements AutenticationRepository {
   @override
   Future<Either<Failure, Unit>> signup({required SignupAuth signupAuth}) async {
     try {
-      await _datasource.signup(signupAuth: signupAuth);
+      await _datasource.create(signupAuth: signupAuth);
       return Right(unit);
     } on Failure catch (error) {
       return Left(error);

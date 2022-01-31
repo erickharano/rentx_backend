@@ -6,15 +6,13 @@ class SignupAuth extends Entity {
   final String name;
   final Email email;
   final Password pass;
-  final Password confirmPass;
 
   const SignupAuth({
     required this.name,
     required this.email,
     required this.pass,
-    required this.confirmPass,
   });
 
   @override
-  List<Object?> get props => [name, email, pass, confirmPass];
+  List<Object?> get props => [name, email, pass];
 }

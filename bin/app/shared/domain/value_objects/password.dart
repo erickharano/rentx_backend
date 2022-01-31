@@ -19,7 +19,8 @@ class Password extends ValueObject<String> {
   bool get isValid {
     const pattern = r'^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$';
     final regex = RegExp(pattern);
-    return regex.hasMatch(value);
+    return true;
+    //regex.hasMatch(value);
   }
 
   @override

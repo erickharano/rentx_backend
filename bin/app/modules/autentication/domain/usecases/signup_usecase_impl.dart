@@ -16,7 +16,6 @@ class SignupUsecaseImpl extends Usecase implements SignupUsecase {
     final error = getMultiFails([
       signupAuth.email,
       signupAuth.pass,
-      signupAuth.confirmPass,
     ]);
 
     if (error != null) {

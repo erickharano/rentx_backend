@@ -7,14 +7,14 @@ import '../../domain/entities/user.dart';
 import '../../domain/entities/signup_auth.dart';
 import '../../domain/entities/signin_auth.dart';
 import '../../../../shared/domain/value_objects/email.dart';
-import '../../infra/datasources/autentication_datasource.dart';
+import '../../infra/datasources/user_datasource.dart';
 import '../mappers/signup_auth_mapper.dart';
 import '../mappers/user_mapper.dart';
 
-class AutenticationDatasourceImpl implements AutenticationDatasource {
+class UserDatasourceImpl implements UserDatasource {
   final MongoHelper _database;
 
-  const AutenticationDatasourceImpl(this._database);
+  const UserDatasourceImpl(this._database);
 
   @override
   Future<User?> exists({required Email email}) async {
@@ -40,7 +40,7 @@ class AutenticationDatasourceImpl implements AutenticationDatasource {
   }
 
   @override
-  Future<String> signin({required SigninAuth signinAuth}) async {
+  Future<User> findOne({required SigninAuth signinAuth}) async {
     try {
       final user = await exists(email: signinAuth.email);
       if (user == null || user.pass != signinAuth.pass.hash) {
@@ -50,7 +50,7 @@ class AutenticationDatasourceImpl implements AutenticationDatasource {
         );
       }
 
-      return user.id.value.$oid;
+      return user;
     } on Failure {
       rethrow;
     } catch (error, stackTrace) {
@@ -62,7 +62,7 @@ class AutenticationDatasourceImpl implements AutenticationDatasource {
   }
 
   @override
-  Future<void> signup({required SignupAuth signupAuth}) async {
+  Future<void> create({required SignupAuth signupAuth}) async {
     try {
       final user = await exists(email: signupAuth.email);
       if (user is User) {

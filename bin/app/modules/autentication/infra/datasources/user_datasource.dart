@@ -3,10 +3,10 @@ import '../../domain/entities/signin_auth.dart';
 import '../../domain/entities/signup_auth.dart';
 import '../../domain/entities/user.dart';
 
-abstract class AutenticationDatasource {
-  Future<String> signin({required SigninAuth signinAuth});
+abstract class UserDatasource {
+  Future<User> findOne({required SigninAuth signinAuth});
 
-  Future<void> signup({required SignupAuth signupAuth});
+  Future<void> create({required SignupAuth signupAuth});
 
   Future<User?> exists({required Email email});
 }

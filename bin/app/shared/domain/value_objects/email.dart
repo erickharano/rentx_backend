@@ -5,8 +5,8 @@ class Email extends ValueObject<String> {
 
   @override
   bool get isValid {
-    const pattern =
-        r'^[-a-zA-Z0-9][-.a-zA-Z0-9]@[-.a-zA-Z0-9]+(.[-.a-zA-Z0-9]+).(com|edu|info|gov|int|mil|net|org|biz|name|museum|coop|aero|pro|tv|[a-zA-Z]{2})$';
+    const pattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+";
+    // r'^[-a-zA-Z0-9][-.a-zA-Z0-9]@[-.a-zA-Z0-9]+(.[-.a-zA-Z0-9]+).(com|edu|info|gov|int|mil|net|org|biz|name|museum|coop|aero|pro|tv|[a-zA-Z]{2})$';
     final regex = RegExp(pattern);
     return regex.hasMatch(value);
   }
